@@ -4,15 +4,13 @@
 
 use super::*;
 use crate as validator_set;
-use frame_support::parameter_types;
+use frame_support::{derive_impl, parameter_types};
 use frame_system::EnsureRoot;
 use pallet_session::*;
-use sp_core::{crypto::key_types::DUMMY, H256};
+use sp_core::crypto::key_types::DUMMY;
 use sp_runtime::{
-	impl_opaque_keys,
-	testing::UintAuthorityId,
-	traits::{BlakeTwo256, IdentityLookup, OpaqueKeys},
-	BuildStorage, KeyTypeId, RuntimeAppPublic,
+	impl_opaque_keys, testing::UintAuthorityId, traits::OpaqueKeys, BuildStorage, KeyTypeId,
+	RuntimeAppPublic,
 };
 use sp_state_machine::BasicExternalities;
 use std::cell::RefCell;
@@ -57,8 +55,7 @@ impl OpaqueKeys for PreUpgradeMockSessionKeys {
 type Block = frame_system::mocking::MockBlock<Test>;
 
 frame_support::construct_runtime!(
-	pub struct Test
-	{
+	pub struct Test {
 		System: frame_system,
 		ValidatorSet: validator_set,
 		Session: pallet_session,
@@ -106,8 +103,8 @@ pub struct TestShouldEndSession;
 impl ShouldEndSession<u64> for TestShouldEndSession {
 	fn should_end_session(now: u64) -> bool {
 		let l = SESSION_LENGTH.with(|l| *l.borrow());
-		now % l == 0 ||
-			FORCE_SESSION_END.with(|l| {
+		now % l == 0
+			|| FORCE_SESSION_END.with(|l| {
 				let r = *l.borrow();
 				*l.borrow_mut() = false;
 				r
@@ -147,30 +144,9 @@ parameter_types! {
 		frame_system::limits::BlockWeights::simple_max(frame_support::weights::Weight::from_parts(1024, 0));
 }
 
+#[derive_impl(frame_system::config_preludes::TestDefaultConfig as frame_system::DefaultConfig)]
 impl frame_system::Config for Test {
-	type BaseCallFilter = frame_support::traits::Everything;
-	type BlockWeights = ();
-	type BlockLength = ();
-	type DbWeight = ();
-	type RuntimeOrigin = RuntimeOrigin;
-	type Nonce = u64;
-	type RuntimeCall = RuntimeCall;
-	type Hash = H256;
-	type Hashing = BlakeTwo256;
-	type AccountId = u64;
-	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
-	type RuntimeEvent = RuntimeEvent;
-	type BlockHashCount = BlockHashCount;
-	type Version = ();
-	type PalletInfo = PalletInfo;
-	type AccountData = ();
-	type OnNewAccount = ();
-	type OnKilledAccount = ();
-	type SystemWeightInfo = ();
-	type SS58Prefix = ();
-	type OnSetCode = ();
-	type MaxConsumers = frame_support::traits::ConstU32<16>;
 }
 
 parameter_types! {

@@ -109,11 +109,11 @@ construct_runtime!(
 ### Genesis config - chain_spec.rs
 
 * Import `opaque::SessionKeys, ValidatorSetConfig, SessionConfig` from the runtime in `node/src/chain_spec.rs`.
-  
+
 ```rust
 use node_template_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
-	SudoConfig, SystemConfig, WASM_BINARY, Signature, 
+	SudoConfig, SystemConfig, WASM_BINARY, Signature,
 	opaque::SessionKeys, ValidatorSetConfig, SessionConfig
 };
 ```
