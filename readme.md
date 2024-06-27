@@ -2,7 +2,7 @@
 
 A [Substrate](https://github.com/paritytech/polkadot-sdk/tree/master/substrate#substrate) pallet to add/remove authorities/validators in PoA networks.
 
-**Note: Current master is compatible with Substrate [polkadot-v1.1.0](https://github.com/paritytech/polkadot-sdk/tree/polkadot-v1.1.0) branch. For older versions, please see releases/tags.**
+**Note: Current master is compatible with Substrate [polkadot-v1.2.0](https://github.com/paritytech/polkadot-sdk/tree/polkadot-v1.2.0) branch. For older versions, please see releases/tags.**
 
 ## Setup with Substrate Node Template
 
@@ -17,12 +17,12 @@ A [Substrate](https://github.com/paritytech/polkadot-sdk/tree/master/substrate#s
 default-features = false
 package = 'substrate-validator-set'
 git = 'https://github.com/gautamdhameja/substrate-validator-set.git'
-version = '1.1.0'
+version = '1.2.0'
 
 [dependencies.pallet-session]
 default-features = false
 git = 'https://github.com/paritytech/polkadot-sdk.git'
-tag = 'polkadot-v1.1.0'
+tag = 'polkadot-v1.2.0'
 ```
 
 ```toml
@@ -109,11 +109,11 @@ construct_runtime!(
 ### Genesis config - chain_spec.rs
 
 * Import `opaque::SessionKeys, ValidatorSetConfig, SessionConfig` from the runtime in `node/src/chain_spec.rs`.
-  
+
 ```rust
 use node_template_runtime::{
 	AccountId, AuraConfig, BalancesConfig, GenesisConfig, GrandpaConfig,
-	SudoConfig, SystemConfig, WASM_BINARY, Signature, 
+	SudoConfig, SystemConfig, WASM_BINARY, Signature,
 	opaque::SessionKeys, ValidatorSetConfig, SessionConfig
 };
 ```
